@@ -1,0 +1,59 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import { coupleNames } from '../data/wedding';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${coupleNames} — Save the Date`,
+  description = `${coupleNames} are getting married. Save the date!`,
+} = Astro.props;
+
+// Astro.site comes from `site` in astro.config.mjs. Open Graph requires
+// absolute URLs, so link previews stay broken until that is the real domain.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL('/og-image.jpg', Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#fbf9f6" />
+
+    {/* Self-hosted fonts. `preload` on the display face only — it draws the
+        largest text, so it is what a visitor notices loading. */}
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-body" />
+
+    {/* Link preview. A save-the-date gets shared by text and WhatsApp far
+        more than it gets found by search, so these tags matter more than
+        the usual SEO boilerplate. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>

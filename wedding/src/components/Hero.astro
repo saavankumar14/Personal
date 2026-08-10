@@ -1,0 +1,72 @@
+---
+import Ornament from './Ornament.astro';
+import { wedding } from '../data/wedding';
+
+/**
+ * The names + "Save the Date" eyebrow.
+ *
+ * The names are real HTML text, not an image, so they are selectable,
+ * searchable, and read correctly by screen readers.
+ */
+---
+
+<header class="hero">
+  <p class="eyebrow">Save the Date</p>
+
+  {/* The ampersand is left readable rather than hidden behind a
+      visually-hidden "and": screen readers already announce "&" as "and",
+      so adding both makes the heading extract as "X & and Y". */}
+  <h1 class="names">
+    <span class="name">{wedding.partnerOne}</span>
+    <span class="amp">&amp;</span>
+    <span class="name">{wedding.partnerTwo}</span>
+  </h1>
+
+  <Ornament />
+</header>
+
+<style>
+  .hero {
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-ink-soft);
+    /* Tracking adds space to the right of the last letter, which visually
+       pushes centred text left. Nudge it back. */
+    text-indent: var(--tracking-widest);
+    margin-bottom: var(--space-lg);
+  }
+
+  .names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+
+    font-size: var(--text-3xl);
+    font-weight: 300;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-lg);
+  }
+
+  .amp {
+    font-size: 0.5em;
+    font-style: italic;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  /* Side by side once there is room for it. */
+  @media (min-width: 40rem) {
+    .names {
+      flex-direction: row;
+      gap: var(--space-md);
+    }
+  }
+</style>

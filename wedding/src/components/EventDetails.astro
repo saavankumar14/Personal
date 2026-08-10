@@ -1,0 +1,96 @@
+---
+import { dateParts, locationLine, machineDate, wedding } from '../data/wedding';
+
+const { weekday, month, day, year, time } = dateParts();
+---
+
+<section class="details">
+  {/* A <time> element with a machine-readable datetime, so browsers and
+      assistive tech get an unambiguous date regardless of how it's styled. */}
+  <time class="date" datetime={machineDate}>
+    <span class="weekday">{weekday}</span>
+    <span class="numerals">
+      <span class="month">{month}</span>
+      <span class="day">{day}</span>
+      <span class="year">{year}</span>
+    </span>
+  </time>
+
+  {wedding.showTime && <p class="time">{time}</p>}
+
+  <p class="location">{locationLine()}</p>
+
+  {!wedding.venue && <p class="pending">{wedding.venuePendingNote}</p>}
+</section>
+
+<style>
+  .details {
+    text-align: center;
+  }
+
+  .date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .weekday {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    text-indent: var(--tracking-wider);
+    color: var(--color-ink-soft);
+  }
+
+  .numerals {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-sm);
+
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 300;
+    line-height: var(--leading-snug);
+
+    /* Cormorant Garamond defaults to oldstyle (text) figures, which sit at
+       x-height with descenders. That reads as a typo in a date — "15" looks
+       smaller than the month beside it. Lining figures are full cap-height
+       and align properly. */
+    font-variant-numeric: lining-nums;
+    font-feature-settings: 'lnum' 1;
+  }
+
+  .day {
+    /* The day gets the emphasis — it's the number people remember. */
+    font-size: 1.2em;
+    color: var(--color-accent-deep);
+  }
+
+  .time {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-style: italic;
+    color: var(--color-ink-soft);
+  }
+
+  .location {
+    margin-top: var(--space-md);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-ink);
+  }
+
+  .pending {
+    margin-top: var(--space-3xs);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-style: italic;
+    color: var(--color-ink-soft);
+  }
+</style>

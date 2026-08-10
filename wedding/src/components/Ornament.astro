@@ -1,0 +1,39 @@
+---
+/**
+ * Decorative divider — PLACEHOLDER.
+ *
+ * Swap this for the Canva flourish when it arrives: either paste the exported
+ * SVG's markup in place of the <svg> below, or replace the whole thing with
+ * an <Image /> pointing at src/assets/florals/…
+ *
+ * It is decorative only, so it is hidden from screen readers.
+ */
+---
+
+<svg
+  class="ornament"
+  viewBox="0 0 200 24"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d="M0 12h72" stroke="currentColor" stroke-width="1" opacity="0.5" />
+  <path d="M128 12h72" stroke="currentColor" stroke-width="1" opacity="0.5" />
+  <path
+    d="M100 4c-5 4-8 6-8 8s3 4 8 8c5-4 8-6 8-8s-3-4-8-8Z"
+    stroke="currentColor"
+    stroke-width="1"
+    stroke-linejoin="round"
+  />
+  <circle cx="84" cy="12" r="1.75" fill="currentColor" />
+  <circle cx="116" cy="12" r="1.75" fill="currentColor" />
+</svg>
+
+<style>
+  .ornament {
+    width: min(200px, 60%);
+    height: auto;
+    margin-inline: auto;
+    color: var(--color-accent);
+  }
+</style>
